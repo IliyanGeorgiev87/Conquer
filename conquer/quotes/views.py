@@ -1,11 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from .models import UserProfile
 
 # Create your views here.
+
+@login_required
+def ViewQuotesView(request):
+    return render(request, 'quotes.html')
+
 def HomeView(request):
     return render(request, "home.html")
 
@@ -25,20 +30,22 @@ def RegisterView(request):
 
     return render(request, 'register.html', {})
 
-@login_required
-def ListView(request):
-    return render(request, 'list.html', {})
-
 def LoginView(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(request, username=user, password=password)
+
+        user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
-            return redirect('list')
+            return redirect('quotes')
         else:
             return render(request, 'login.html', {'error': 'Invalid credentials'})
-    
-    return render(request, 'login.html', {})
+
+    return render(request, 'login.html')
+
+@login_required
+def LogoutView(request):
+    logout(request)
+    return redirect ('home')
