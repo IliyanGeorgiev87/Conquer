@@ -1,13 +1,18 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from .models import UserProfile, Quote
 
+from django.views.generic import DeleteView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+
 # Create your views here.
 
 #* Account and misc:
+
 @login_required
 def ViewQuotesView(request):
     return render(request, 'quotes.html')
@@ -51,9 +56,14 @@ def LogoutView(request):
     logout(request)
     return redirect ('home')
 
-#* Quotes
+
+
+
+#* Quotes:
+
+
 @login_required
-def CreateView(request):
+def QuoteCreateView(request):
 
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -70,3 +80,42 @@ def CreateView(request):
         return redirect('quotes')
 
     return render(request, 'create.html')
+    
+
+class QuoteDeleteView(LoginRequiredMixin, DeleteView):
+    model = Quote
+    template_name = 'delete.html'
+    success_url = reverse_lazy('quotes')
+    login_url = '/login'
+
+@login_required
+def QuoteUpdateView(request,pk):
+    quote = get_object_or_404(Quote,pk=pk)
+
+    if request.method == 'POST':
+        quote.title = request.POST.get('title')
+        quote.quote_text = request.POST.get('text')
+        quote.quote_author = request.POST.get('author')
+        quote.save()
+
+        return redirect('quotes')
+    
+    return render(request, 'edit.html', {'quote': quote})
+
+
+class QuoteDetailVIew(LoginRequiredMixin, DetailView):
+    model = Quote
+    template_name = 'quote.html'
+    context_object_name = 'quote'
+    login_url = '/login'
+
+"""
+class NotesUpdateView(LoginRequiredMixin, UpdateView):
+    model = Notes
+    success_url = "/smart/notes/"
+    form_class = NotesForm
+    login_url = "/login"
+
+    def get_queryset(self):
+        return self.request.user.notes.all()
+"""

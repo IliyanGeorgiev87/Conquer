@@ -8,5 +8,9 @@ urlpatterns = [
     path('quotes/', views.ViewQuotesView, name='quotes'),
     path('login/', views.LoginView, name='login'),
     path('logout/', views.LogoutView, name='logout'),
-    path('create/', views.CreateView, name='create')
+    #* for quotes
+    path('create/', views.QuoteCreateView, name='create'),
+    path('delete/<int:pk>/', views.QuoteDeleteView.as_view(), name='delete'),
+    path('update/<int:pk>/', views.QuoteUpdateView, name='update'),
+    path('quote/<int:pk>/', views.QuoteDeleteView.as_view(), name='quote-details')
 ]
