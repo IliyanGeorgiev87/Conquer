@@ -3,10 +3,11 @@ from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
-from .models import UserProfile
+from .models import UserProfile, Quote
 
 # Create your views here.
 
+#* Account and misc:
 @login_required
 def ViewQuotesView(request):
     return render(request, 'quotes.html')
@@ -26,7 +27,7 @@ def RegisterView(request):
         user = User.objects.create_user(username = username, password = password)
         UserProfile.objects.create(user = user)
         login(request, user)
-        return redirect('list')
+        return redirect('quotes')
 
     return render(request, 'register.html', {})
 
@@ -49,3 +50,23 @@ def LoginView(request):
 def LogoutView(request):
     logout(request)
     return redirect ('home')
+
+#* Quotes
+@login_required
+def CreateView(request):
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        text = request.POST.get('text')
+        author = request.POST.get('author')
+
+        if Quote.objects.filter(title = title).exists():
+            context = {
+                'error': 'Quote title already exist! Use a different one!'
+            }
+            return render(request, 'create.html', context)
+        
+        quote = Quote.objects.create(title=title, quote_text=text, quote_author = author)
+        return redirect('quotes')
+
+    return render(request, 'create.html')
