@@ -15,7 +15,10 @@ from django.urls import reverse_lazy
 
 @login_required
 def ViewQuotesView(request):
-    return render(request, 'quotes.html')
+    context = {
+        'quotes': Quote.objects.all()
+    }
+    return render(request, 'quotes.html', context)
 
 def HomeView(request):
     return render(request, "home.html")
