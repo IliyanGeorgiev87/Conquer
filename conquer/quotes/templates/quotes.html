@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="card-footer d-flex justify-content-end">
-                        <a href="{% url 'quote-details' quote.pk %}" class="btn btn-success me-2">View</a>
+                        <a href="{% url 'quote' quote.pk %}" class="btn btn-success me-2">View</a>
                         <a href="{% url 'update' quote.pk %}" class="btn btn-warning me-2">Edit <i class="bi bi-pencil-square"></i></a>
                         <a href="{% url 'delete' quote.pk %}" class="btn btn-danger">Delete <i class="bi bi-trash3-fill"></i></a>
                     </div>
