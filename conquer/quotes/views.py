@@ -84,7 +84,7 @@ def QuoteCreateView(request):
 
     return render(request, 'create.html')
     
-
+#-
 class QuoteDeleteView(LoginRequiredMixin, DeleteView):
     model = Quote
     template_name = 'delete.html'
@@ -105,12 +105,13 @@ def QuoteUpdateView(request,pk):
     
     return render(request, 'edit.html', {'quote': quote})
 
-
+#* login required
 class QuoteDetailVIew(LoginRequiredMixin, DetailView):
     model = Quote
     template_name = 'quote.html'
     context_object_name = 'quote'
     login_url = '/login'
+
 
 """
 class NotesUpdateView(LoginRequiredMixin, UpdateView):

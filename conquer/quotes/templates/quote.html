@@ -30,8 +30,8 @@
     
         <div class="d-flex flex-row justify-content-center gap-3 mt-4">
             <a href="{% url 'quotes' %}" class="btn btn-primary">Back to quotes <i class="bi bi-arrow-return-left ms-1"></i></a>
-            <a href="{% url 'update' quote.pk %}" class="btn btn-warning">Edit</a>
-            <a href="{% url 'delete' quote.pk %}" class="btn btn-danger">Delete</a>
+            <a href="{% url 'update' quote.pk %}" class="btn btn-warning">Edit <i class="bi bi-pencil-square ms-1"></i></a>
+            <a href="{% url 'delete' quote.pk %}" class="btn btn-danger">Delete <i class="bi bi-trash-fill ms-1"></i></a>
         </div>
     </div>
 </body>
