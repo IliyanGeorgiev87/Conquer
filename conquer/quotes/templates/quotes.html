@@ -18,39 +18,43 @@
         
         <div class="row">
             
-            {% for quote in quotes %}
-            
-            <div class="col-md-4 mb-4">
+            <div class="col">
+                <div style="width: 20%;">
+                    <a href="{% url 'create' %}" class="btn btn-primary ms-2 mb-4">Add quote</a>
+                </div>
+    
+                <div class="container">
+                    <div class="row">
+                        {% for quote in quotes %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100 shadow-sm">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">{{ quote.title }}</h5>
+                                    </div>
                 
-                <div class="card h-100 shadow-sm">
-                    
-                    <div class="card-header">
-                        <h5 class="mb-0">{{ quote.title }}</h5>
-                    </div>
-
-                    <div class="card-body">
-                        <figure>
-                            
-                            <blockquote class="blockquote">
-                                <p class="fs-5">{{ quote.quote_text }}</p>
-                            </blockquote>
-                            
-                            <figcaption class="blockquote-footer">
-                                <cite>{{ quote.quote_author }}</cite>
-                            </figcaption>
-                        
-                        </figure>
-                    </div>
-
-                    <div class="card-footer d-flex justify-content-end">
-                        <a href="{% url 'quote' quote.pk %}" class="btn btn-success me-2">View</a>
-                        <a href="{% url 'update' quote.pk %}" class="btn btn-warning me-2">Edit <i class="bi bi-pencil-square"></i></a>
-                        <a href="{% url 'delete' quote.pk %}" class="btn btn-danger">Delete <i class="bi bi-trash3-fill"></i></a>
+                                    <div class="card-body">
+                                        <figure class="mb-0">
+                                            <blockquote class="blockquote mb-4">
+                                                <p class="fs-5 mb-2">{{ quote.quote_text }}</p>
+                                            </blockquote>
+                                            <figcaption class="blockquote-footer text-end mb-0">
+                                                <cite>{{ quote.quote_author }}</cite>
+                                            </figcaption>
+                                        </figure>
+                                    </div>
+                
+                                    <div class="card-footer d-flex justify-content-end flex-wrap gap-2">
+                                        <a href="{% url 'quote' quote.pk %}" class="btn btn-success">View</a>
+                                        <a href="{% url 'update' quote.pk %}" class="btn btn-warning">Edit <i class="bi bi-pencil-square"></i></a>
+                                        <a href="{% url 'delete' quote.pk %}" class="btn btn-danger">Delete <i class="bi bi-trash3-fill"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
+                
             </div>
-            
-            {% endfor %}
         
         </div>
     </div>
