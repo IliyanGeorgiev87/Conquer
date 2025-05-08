@@ -47,7 +47,7 @@ def LoginView(request):
         try:
             User.objects.get(username=username)
         except User.DoesNotExist:
-            return render(request, 'login.html', {'error': 'User does not exist'})
+            return render(request, 'login.html', {'error': 'Incorrect username or password.'})
         
         if user is not None:
             login(request, user)

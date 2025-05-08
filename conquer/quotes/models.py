@@ -7,7 +7,6 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-    
 
 class Quote(models.Model):
     title = models.CharField(max_length=100, blank=False, null=False)
