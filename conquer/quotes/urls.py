@@ -8,6 +8,8 @@ urlpatterns = [
     path('quotes/', views.ViewQuotesView, name='quotes'),
     path('login/', views.LoginView, name='login'),
     path('logout/', views.LogoutView, name='logout'),
+    path('account/', views.AccountLookupView, name='account'),
+    path('account/delete/', views.AccountDeleteView, name='account_delete'),
     #* for quotes
     path('create/', views.QuoteCreateView, name='create'),
     path('delete/<int:pk>/', views.QuoteDeleteView.as_view(), name='delete'),

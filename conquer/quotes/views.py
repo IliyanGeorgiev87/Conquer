@@ -9,8 +9,6 @@ from django.views.generic import DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
-# Create your views here.
-
 #* Account and misc:
 
 @login_required
@@ -46,6 +44,11 @@ def LoginView(request):
 
         user = authenticate(request, username=username, password=password)
 
+        try:
+            User.objects.get(username=username)
+        except User.DoesNotExist:
+            return render(request, 'login.html', {'error': 'User does not exist'})
+        
         if user is not None:
             login(request, user)
             return redirect('quotes')
@@ -59,8 +62,22 @@ def LogoutView(request):
     logout(request)
     return redirect ('home')
 
+@login_required
+def AccountLookupView(request):
+    return render(request, 'user_account.html')
 
 
+@login_required
+
+def AccountDeleteView(request):
+
+    if request.method == 'POST':
+        user = request.user
+        logout(request)
+        user.delete()
+        return redirect('home')
+
+    return render(request, 'account_delete.html')
 
 #* Quotes:
 
@@ -105,21 +122,8 @@ def QuoteUpdateView(request,pk):
     
     return render(request, 'edit.html', {'quote': quote})
 
-#* login required
 class QuoteDetailVIew(LoginRequiredMixin, DetailView):
     model = Quote
     template_name = 'quote.html'
     context_object_name = 'quote'
     login_url = '/login'
-
-
-"""
-class NotesUpdateView(LoginRequiredMixin, UpdateView):
-    model = Notes
-    success_url = "/smart/notes/"
-    form_class = NotesForm
-    login_url = "/login"
-
-    def get_queryset(self):
-        return self.request.user.notes.all()
-"""
