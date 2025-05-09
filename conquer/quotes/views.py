@@ -82,22 +82,37 @@ def AccountDeleteView(request):
 #* Quotes:
 
 
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .models import Quote
+from .models import UserProfile  # Make sure you import your UserProfile model
+
 @login_required
 def QuoteCreateView(request):
-
     if request.method == 'POST':
         title = request.POST.get('title')
         text = request.POST.get('text')
         author = request.POST.get('author')
 
-        if Quote.objects.filter(title = title).exists():
+        if Quote.objects.filter(title=title).exists():
             context = {
-                'error': 'Quote title already exist! Use a different one!'
+                'error': 'Quote title already exists! Use a different one!'
             }
             return render(request, 'create.html', context)
-        
-        quote = Quote.objects.create(title=title, quote_text=text, quote_author = author)
-        return redirect('quotes')
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            quote = Quote.objects.create(
+                title=title,
+                quote_text=text,
+                quote_author=author,
+                user_profile=user_profile
+            )
+            return redirect('quotes')
+        except UserProfile.DoesNotExist:
+            context = {
+                'error': 'User profile not found. Please contact support.'
+            }
+            return render(request, 'create.html', context)
 
     return render(request, 'create.html')
     
