@@ -9,6 +9,7 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Quote(models.Model):
+    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     title = models.CharField(max_length=100, blank=False, null=False)
     quote_text = models.TextField(max_length=500)
     quote_author = models.CharField(max_length=100)
