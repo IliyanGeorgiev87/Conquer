@@ -13,11 +13,6 @@ This is among my first app ever built all alone. Please don`t judge. Thanks for 
  - **Update status of the task**: users are able to set their task to completed
  - **Delete task**: users are able to delete their tasks
 
-## Used technologies
-- [Django Python web framework] (https://www.djangoproject.com/)
-- [Bootstrap 5.3 CSS Framework] (https://getbootstrap.com/)
-- HTML5
-
 ## Prerequisites
 Before you start, ensure you have the following installed on your machine:
 
