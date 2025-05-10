@@ -81,12 +81,6 @@ def AccountDeleteView(request):
 
 #* Quotes:
 
-
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .models import Quote
-from .models import UserProfile  # Make sure you import your UserProfile model
-
 @login_required
 def QuoteCreateView(request):
     if request.method == 'POST':
